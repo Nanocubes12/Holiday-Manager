@@ -8,11 +8,6 @@ url='https://www.timeanddate.com/holidays/us/'
 results= requests.get(url)
 holiday= BeautifulSoup(results.text,'html.parser')
 
-holiday_tr= holiday.find_all('tr')
-
-
-# print(holiday_tr)
-
-hol_th = holiday.find('th', {'class':'nw'})
-print(hol_th.string)
-
+holiday_table= holiday.find_all('table')
+print(holiday_table)
+# <table id="holidays-table" 
