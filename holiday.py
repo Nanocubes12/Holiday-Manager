@@ -127,8 +127,8 @@ class HolidayList:
         # Handle any exceptions.     
 
     def numHolidays(self):
-
-        pass
+        num= len(self.innerHolidays)
+        return num
         # Return the total number of holidays in innerHolidays
     
     def filter_holidays_by_week(self,year, week_number):
