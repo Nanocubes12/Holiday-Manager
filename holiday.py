@@ -132,6 +132,7 @@ class HolidayList:
         # Return the total number of holidays in innerHolidays
     
     def filter_holidays_by_week(self,year, week_number):
+        
         pass
         # Use a Lambda function to filter by week number and save this as holidays, use the filter on innerHolidays
         # Week number is part of the the Datetime object
@@ -152,7 +153,11 @@ class HolidayList:
         # Format weather information and return weather string.
 
     def viewCurrentWeek(self):
-        pass
+        weeknumber=datetime.datetime.now().isocalendar()[1] 
+        todays_year=datetime.datetime.now().isocalendar()[0]
+        list_holiday= self.filter_holidays_by_week(todays_year,weeknumber)
+
+        self.displayHolidaysInWeek(list_holiday)
         # Use the Datetime Module to look up current week and year
         # Use your filter_holidays_by_week function to get the list of holidays 
         # for the current week/year
@@ -205,9 +210,9 @@ def main():
             elif saveConfirmation == 'n':
                 print('Canceled:\nHoliday list file save canceled.')
         elif user_input ==4:
-            name= input('holiday name?')
-            date= input('date?')
-            init_holidays.findHoliday(name,date)
+            # name= input('holiday name?')
+            # date= input('date?')
+            init_holidays.viewCurrentWeek()
         elif user_input ==5:
             exitConfirmation= init_holidays.exitConfirmed()
             if exitConfirmation == 'y':
