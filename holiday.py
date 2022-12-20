@@ -13,8 +13,8 @@ from dataclasses import dataclass
 # --------------------------------------------
 
 class Holiday:
-    def __init__(self,name: str, date: datetime.date):
-        self.name=name
+    def __init__(self,name, date):
+        self.name= name
         self.date= date
 
     
@@ -23,7 +23,9 @@ class Holiday:
 
         # String output
         # Holiday output when printed.
-    
+    def get_values(self):
+        valueList= [self.name,self.date]
+        return valueList
            
 # -------------------------------------------
 # The HolidayList class acts as a wrapper and container
@@ -45,8 +47,8 @@ class HolidayList:
         for i in self.innerHolidays:
             if type(i) == Holiday:
                 if HolidayName == str(i).split(',')[0] and str(Date) == str(i).split(', ')[1]:
-                    print(i) # Return Holiday
-            print(i)
+                    return i # Return Holiday
+            
     def removeHoliday(self,HolidayName, Date):
         removeSuccess= True
         
@@ -99,7 +101,7 @@ class HolidayList:
             else: 
                 print('Invalid input. Try Again')
 
-    def saveConfirmed(self,save_input):
+    def saveConfirmed(self):
         saveConfirmation=True
         while saveConfirmation==True:
             save_input= input('Are you sure you want to save your changes? [y/n]: ')
@@ -132,15 +134,31 @@ class HolidayList:
         # Return the total number of holidays in innerHolidays
     
     def filter_holidays_by_week(self,year, week_number):
+        holidays=[]
+        for i in self.innerHolidays:
+            d2= datetime.datetime.strptime(str(i).split(', ')[1],'%Y-%m-%d').date()
+            if (int(year) == d2.isocalendar()[0]) and (int(week_number) == d2.isocalendar()[1]):
+                  holidays.append(str(i))
         
-        pass
+        return holidays
+       
+            
         # Use a Lambda function to filter by week number and save this as holidays, use the filter on innerHolidays
         # Week number is part of the the Datetime object
         # Cast filter results as list
         # return your holidays
+    def viewOtherWeek (self, year, weekNumber):
+        list_holiday= self.filter_holidays_by_week(year,weekNumber)
+        self.displayHolidaysInWeek(list_holiday)
 
     def displayHolidaysInWeek(self,holidayList):
-        pass
+       
+        # holidayWeeks= self.filter_holidays_by_week()
+        if len(holidayList)==0:
+            print("There are no holidays for this week")
+        else:
+            for x in holidayList:
+                print(x)
         # Use your filter_holidays_by_week to get list of holidays within a week as a parameter
         # Output formated holidays in the week. 
         # * Remember to use the holiday __str__ method.
@@ -156,8 +174,10 @@ class HolidayList:
         weeknumber=datetime.datetime.now().isocalendar()[1] 
         todays_year=datetime.datetime.now().isocalendar()[0]
         list_holiday= self.filter_holidays_by_week(todays_year,weeknumber)
-
+        
+        
         self.displayHolidaysInWeek(list_holiday)
+        
         # Use the Datetime Module to look up current week and year
         # Use your filter_holidays_by_week function to get the list of holidays 
         # for the current week/year
@@ -210,16 +230,23 @@ def main():
             elif saveConfirmation == 'n':
                 print('Canceled:\nHoliday list file save canceled.')
         elif user_input ==4:
-            # name= input('holiday name?')
-            # date= input('date?')
-            init_holidays.viewCurrentWeek()
+            current_other= input('Would you like to see holidays for current week? [y:n]: ')
+            if current_other.lower() == 'y':
+                init_holidays.viewCurrentWeek()
+            elif current_other.lower() == 'n':
+                year= input('What year?: ')
+                week_number= input('what week? #[1-52, Leave blank for the current week]: ')
+                init_holidays.viewOtherWeek(year,week_number)
+            else:
+                print('Not a valid input')
         elif user_input ==5:
             exitConfirmation= init_holidays.exitConfirmed()
             if exitConfirmation == 'y':
                 menu= False
             elif exitConfirmation == 'n':
                 menu= True
-                
+        else:
+            print('Not a valid input')
 
             
 
