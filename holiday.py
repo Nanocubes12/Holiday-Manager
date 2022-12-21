@@ -23,9 +23,6 @@ class Holiday:
 
         # String output
         # Holiday output when printed.
-    def get_values(self):
-        valueList= [self.name,self.date]
-        return valueList
            
 # -------------------------------------------
 # The HolidayList class acts as a wrapper and container
