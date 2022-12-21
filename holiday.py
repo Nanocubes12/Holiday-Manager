@@ -9,7 +9,7 @@ from dataclasses import dataclass
 # Modify the holiday class to 
 # 1. Only accept Datetime objects for date.
 # 2. You may need to add additional functions
-# 3. You may drop the init if you are using @dataclasses
+# 3. You may drop the init if you are using @dataclassess
 # --------------------------------------------
 
 class Holiday:
@@ -40,7 +40,8 @@ class HolidayList:
     def addHoliday(self,holidayObj):   
         if type(holidayObj)==Holiday:                     # Make sure holidayObj is an Holiday Object by checking the type
             self.innerHolidays.append(holidayObj)    # Use innerHolidays.append(holidayObj) to add holiday
-            print(f'{holidayObj} has been added to the list\n')            # print to the user that you added a holiday
+        
+        return holidayObj 
         
     def findHoliday(self,HolidayName, Date):
         # Find Holiday in innerHolidays
@@ -121,7 +122,33 @@ class HolidayList:
             json.dump(ToSave,f, indent= 4)
        
     def scrapeHolidays(self):
-        pass
+        year= 2022
+        url='https://www.timeanddate.com/holidays/us/'
+        # holiday= []
+        dictValues=[]
+        holidays= {}
+
+        for year in range(year-2, year+3):
+
+            # year_url= url + str(year)
+            request= requests.get(url)
+            html= BeautifulSoup(request.text,'html.parser')
+            table= html.find('table').find('tbody')
+            rows= table.find_all('tr')
+
+            for row in rows:
+                if len(row.contents) == 0:
+                    continue
+
+                date_str= row.find('th').contents[0] + ' ' + str(year)
+                format= '%b %d %Y'
+                date= str(datetime.datetime.strptime(date_str, format).date())
+                name= row.find_all('td')[1].find('a').contents[0].replace(',',':')
+
+
+                self.addHoliday(Holiday(name,date))
+        
+        
         # Scrape Holidays from https://www.timeanddate.com/holidays/us/ 
         # Remember, 2 previous years, current year, and 2  years into the future. You can scrape multiple years by adding year to the timeanddate URL. For example https://www.timeanddate.com/holidays/us/2022
         # Check to see if name and date of holiday is in innerHolidays array
@@ -141,12 +168,12 @@ class HolidayList:
                   holidays.append(str(i))
         
         return holidays
-       
             
         # Use a Lambda function to filter by week number and save this as holidays, use the filter on innerHolidays
         # Week number is part of the the Datetime object
         # Cast filter results as list
         # return your holidays
+
     def viewOtherWeek (self, year, weekNumber):
         list_holiday= self.filter_holidays_by_week(year,weekNumber)
         self.displayHolidaysInWeek(list_holiday)
@@ -196,9 +223,11 @@ def main():
     # 2. Load JSON file via HolidayList read_json function
     init_holidays.read_json('holidays.json')
     # 3. Scrape additional holidays using your HolidayList scrapeHolidays function.
+    init_holidays.scrapeHolidays()
 
-    print('Holiday Management\n===================')
-    print(f'There are {init_holidays.numHolidays()} holidays stored in the system\n')
+    print('\nHoliday Management\n===================')
+    numholidays= init_holidays.numHolidays()
+    print(f'There are {numholidays} holidays stored in the system\n')
     
     # 3. Create while loop for user to keep adding or working with the Calender
     menu= True
@@ -216,8 +245,8 @@ def main():
         if user_input ==1:
             holidayName= str(input('Enter Holiday Name\n'))
             date= init_holidays.get_date()
-            init_holidays.addHoliday(Holiday(holidayName, date))
-
+            result=init_holidays.addHoliday(Holiday(holidayName, date))
+            print(f'{result} has been added to the list\n') 
         elif user_input ==2:
             holidayName= str(input('Enter the Holiday Name you will like to Remove\n'))
             date= init_holidays.get_date()
