@@ -14,5 +14,6 @@ This project entails creating a text-based Holiday Manager that allows users to 
   2.	Remove a Holiday - where the user can remove a holiday currently on the holiday list
   3.	Save - where any progress made in the user session can be saved
   4.	View Holidays - where a user can specify a specific year and a specific week in that year to see what the holidays are. If you select the current week, you'll be able to select to see the weather forecast for the holidays within that week as well.
-  5.	Exit - Exit Holiday Manager. 
+  5.	Exit - Exit Holiday Manager.
+
 Please enjoy my Holiday Manager!
