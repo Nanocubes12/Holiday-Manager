@@ -4,9 +4,13 @@ This project entails creating a text-based Holiday Manager that allows users to 
 
 ### Design features and requirements:
 •	Created an easy-to-use interface.
+
 •	An initial JSON file named holidays.json, containing a set of 10 starting holidays, was provided. 
+
 •	All the holidays from https://www.timeanddate.com/holidays/us/  were preloaded. **NOTE: Only preload holidays with concrete dates. Do not calculate holiday dates. The team expects you to include holidays from the present year, 2 years of past holidays, and 2 years of future holidays.
+
 •	The holidays were saved in JSON, following the formatting of the provided file. A distinct JSON file named savedholidays.json was generated to store all the holidays obtained from web scraping, in addition to those from the holidays.json file.
+
 •	The weather forecast for the holidays of the current week was obtained from the following URL: https://weather.com/weather/tenday/l/3397f813e2a7833d07c1756bf7fb0ff62a68918b04566dcd9ccb15451a0a2a64
 
 ### Inside the Holiday Manager are five main sections (Interface):
