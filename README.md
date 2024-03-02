@@ -9,7 +9,7 @@ This project entails creating a text-based Holiday Manager that allows users to 
 •	The holidays were saved in JSON, following the formatting of the provided file. A distinct JSON file named savedholidays.json was generated to store all the holidays obtained from web scraping, in addition to those from the holidays.json file.
 •	The weather forecast for the holidays of the current week was obtained from the following URL: https://weather.com/weather/tenday/l/3397f813e2a7833d07c1756bf7fb0ff62a68918b04566dcd9ccb15451a0a2a64
 
-###Inside the Holiday Manager are five main sections (Interface):
+### Inside the Holiday Manager are five main sections (Interface):
   1.	Adding a Holiday - where a user can add a holiday to the holiday list
   2.	Remove a Holiday - where the user can remove a holiday currently on the holiday list
   3.	Save - where any progress made in the user session can be saved
