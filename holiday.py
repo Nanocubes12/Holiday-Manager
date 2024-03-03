@@ -7,9 +7,7 @@ from dataclasses import dataclass
 
 # -------------------------------------------
 # Modify the holiday class to:
-# 1. Only accept Datetime objects for date.
-# 2. You may need to add additional functions
-# 3. You may drop the init if you are using @dataclassess
+# Only accept Datetime objects for date.
 # --------------------------------------------
 
 class Holiday:
@@ -43,9 +41,9 @@ class HolidayList:
         for i in self.innerHolidays:
             if type(i) == Holiday:
                 if HolidayName == str(i).split(',')[0] and str(Date) == str(i).split(', ')[1]:
-                    return i                              # Return Holiday
+                    return i                              
         
-    '''Remove Holiday from list'''
+    # Remove Holiday from list
     def removeHoliday(self,HolidayName, Date):
         removeSuccess= True
 
@@ -63,7 +61,7 @@ class HolidayList:
             print(f'Error:\n{HolidayName} not found')
 
                 
-    '''Read in things from json file location'''
+    # Read in things from json file location
     def read_json(self,filelocation):
         with open(filelocation,'r') as h: 
             holiday= json.load(h)                   
@@ -75,7 +73,7 @@ class HolidayList:
             date= holiday['holidays'][i]['date']
             self.addHoliday(Holiday(name,date))      
 
-    '''Verify User Input Date'''
+    # Verify User Input Date
     def get_date(self):
         dateConfirmed=True
         while dateConfirmed==True:
@@ -88,7 +86,7 @@ class HolidayList:
             except:
                 print(f'\nERROR:\nInvalid date. Please try again.\n')
 
-
+    # Verify Exit Request
     def exitConfirmed(self):
         exitConfirmation=True
         while exitConfirmation==True:
@@ -99,6 +97,7 @@ class HolidayList:
             else: 
                 print('Invalid input. Try Again')
 
+    # Verify save holidays
     def saveConfirmed(self):
         saveConfirmation=True
         while saveConfirmation==True:
@@ -183,6 +182,7 @@ class HolidayList:
     def getWeather(self,holi_date):
         req= requests.get('https://weather.com/weather/tenday/l/3397f813e2a7833d07c1756bf7fb0ff62a68918b04566dcd9ccb15451a0a2a64')
         req_html= BeautifulSoup(req.text,'html.parser')
+        
 
         main= req_html.find('main', attrs= {'id':'MainContent'}) #find returns the first item 
         main_class= main.find('div', attrs= {'class' : "DailyForecast--DisclosureList--nosQS"})
@@ -190,6 +190,7 @@ class HolidayList:
 
         count= 0 
 
+        # Format weather information and return weather string
         for x in range(len(details)):
             # Today's temps and date
             if count == 0:
@@ -202,6 +203,7 @@ class HolidayList:
                 # High temp for today
                 today_high= list(today[0].find('span', attrs={'data-testid': "TemperatureValue"}))[0]
 
+                # Use Try / Except to catch problems
                 for holi_count in holi_date:
                     today_name= holi_count.split(',')[0]
                     try:
@@ -232,10 +234,6 @@ class HolidayList:
                 name= j.split(',')[0]
                 if int(date[4:6]) == int(j[-2:]):
                     print(f'*{name} [{date}]: High {high_temp} / Low {low_temp}')
-                
-        
-        # Use Try / Except to catch problems
-        # Format weather information and return weather string.
 
 
     def viewCurrentWeek(self):
